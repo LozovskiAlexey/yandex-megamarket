@@ -1,10 +1,10 @@
-package com.yandex.enrollment;
+package com.lozovskiy.megamarket;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class EnrollmentApplicationTests {
+class MegaMarketApplicationTests {
 
 	@Test
 	void contextLoads() {

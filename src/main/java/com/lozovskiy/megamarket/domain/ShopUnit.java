@@ -1,41 +1,46 @@
 package com.lozovskiy.megamarket.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import javax.persistence.*;
+import java.time.Instant;
+import java.util.Set;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "shop_unit")
-public class ShopUnitModel {
+public class ShopUnit {
     @Id
-    @Column(name="id", nullable = false)
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private String id;
 
-    // name
-    @Column(name="name", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    // date
-    @Column(name="date", nullable = false)
-    private String date;
+    @Column(name = "date", nullable = false)
+    private Instant date;
 
-    // parentId
-    @ManyToOne
-    @JoinColumn(name = "parentId")
-    private ShopUnitModel parentNode;
-    //private String parentId;
+    @ManyToOne(targetEntity = ShopUnit.class)
+    @JoinColumn(name = "parent_id", referencedColumnName = "id")
+    private ShopUnit parentUnit;
 
-    // type
-    @Column(name="type", nullable = false)
+    @Column(name = "type", nullable = false)
     @Enumerated(EnumType.STRING)
     private ShopUnitType type;
 
-    // price
-    @Column(name="price")
+    @Column(name = "price")
     private Integer price;
 
-    
+    @Column(name = "children")
+    @OneToMany(mappedBy = "parentUnit", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    private Set<ShopUnit> children;
+
+    @JsonIgnore
+    public ShopUnit getParentUnit() {
+        return parentUnit;
+    }
 }
