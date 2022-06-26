@@ -2,7 +2,7 @@ package com.lozovskiy.megamarket.service;
 
 import com.lozovskiy.megamarket.domain.ShopUnitType;
 import com.lozovskiy.megamarket.domain.ShopUnitsHistory;
-import com.lozovskiy.megamarket.dto.ShopUnitImport;
+import com.lozovskiy.megamarket.exception.ShopUnitNotFoundException;
 import com.lozovskiy.megamarket.repository.ShopUnitHistoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +19,9 @@ public class ShopUnitHistoryService {
 
     @Transactional(readOnly = true)
     public List<ShopUnitsHistory> getBetween(String id, Instant start, Instant end){
+        if (!shopUnitHistoryRepository.existsShopUnitsHistoryByUnitId(id)){
+            throw new ShopUnitNotFoundException();
+        }
         return shopUnitHistoryRepository.findByUnitIdAndDateBetween(id, start, end);
     }
 
@@ -30,6 +33,11 @@ public class ShopUnitHistoryService {
     @Transactional
     public void save(ShopUnitsHistory shopUnitsHistory){
         shopUnitHistoryRepository.save(shopUnitsHistory);
+    }
+
+    @Transactional
+    public void saveAll(List<ShopUnitsHistory> shopUnitsHistories){
+        shopUnitHistoryRepository.saveAll(shopUnitsHistories);
     }
 
     @Transactional

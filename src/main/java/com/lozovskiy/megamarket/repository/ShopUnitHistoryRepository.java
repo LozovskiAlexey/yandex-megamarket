@@ -16,5 +16,7 @@ public interface ShopUnitHistoryRepository extends JpaRepository<ShopUnitsHistor
 
     List<ShopUnitsHistory> findByDateBetweenAndType(Instant start, Instant end, ShopUnitType type);
 
+    boolean existsShopUnitsHistoryByUnitId(String unitId);
+
     void deleteAllByUnitIdIn(List<String> ids);
 }

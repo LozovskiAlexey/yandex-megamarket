@@ -2,20 +2,23 @@ package com.lozovskiy.megamarket.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 
-import java.time.Instant;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 import java.time.ZonedDateTime;
 import java.util.List;
 
 @Getter
 @Setter
 public class ShopUnitImportRequest {
-    @NonNull
+
+    @NotNull
+    @Valid
     private List<ShopUnitImport> items;
 
-    @NonNull
-    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+    @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
     private ZonedDateTime updateDate;
 }

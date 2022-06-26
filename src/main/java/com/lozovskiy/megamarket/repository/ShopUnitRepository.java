@@ -12,11 +12,4 @@ import java.util.List;
 @Repository
 public interface ShopUnitRepository extends JpaRepository<ShopUnit, String> {
 
-    @Query(nativeQuery = true,
-            value = "select unit " +
-                    "from ShopUnit unit " +
-                    "inner join unit.parentUnit p " +
-                    "where p.id = :parentId")
-    List<ShopUnit> findShopUnitsByParentId(@Param("parentId") String parentId);
-
 }
